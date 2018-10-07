@@ -1,0 +1,9 @@
+server:
+  port: 8080
+spring:
+  data:
+    mongodb:
+      host: mongo-server
+      username: root
+      database: test
+      authentication-database: admin
