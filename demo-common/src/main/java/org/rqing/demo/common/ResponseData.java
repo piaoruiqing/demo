@@ -3,6 +3,15 @@ package org.rqing.demo.common;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * response data
+ * 
+ * @description 
+ * @author piaoruiqing
+ * @date: 2018/10/07 21:45
+ *
+ * @since JDK 1.8
+ */
 public class ResponseData {
 	
 	public final static String STATUS_SUCCESS = "0";
@@ -54,7 +63,7 @@ public class ResponseData {
 	}
 	
 	public Map<String, Object> convertToMap() {
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<>(5);
 		map.put("status", this.status);
 		map.put("msg", this.msg);
 		map.put("data", this.data);

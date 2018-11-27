@@ -1,9 +1,3 @@
-/*
- * File Name:MongoConfig.java is created on 2018年10月7日下午1:38:45 by piaoruiqing
- *
- * Copyright (c) 2018, xiaoyujiaoiyu technology All Rights Reserved.
- * 
- */
 package org.rqing.demo.mongo.config;
 
 import org.springframework.context.annotation.Configuration;

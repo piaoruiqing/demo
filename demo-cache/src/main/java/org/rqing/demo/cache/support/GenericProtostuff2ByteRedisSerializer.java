@@ -11,6 +11,7 @@ import io.protostuff.runtime.RuntimeSchema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 /**
  * generic protostuff redis serializer
  * 
@@ -22,26 +23,26 @@ import lombok.NoArgsConstructor;
  */
 public class GenericProtostuff2ByteRedisSerializer implements RedisSerializer<Object>{
 
-    private final RuntimeSchema<Item> schema = RuntimeSchema.createFrom(Item.class);
+    private final RuntimeSchema<ObjectWrapper> schema = RuntimeSchema.createFrom(ObjectWrapper.class);
 
 	@Override
 	public byte[] serialize(Object object) throws SerializationException {
-		byte[] bytes = ProtostuffIOUtil.toByteArray(new Item(object), schema, LinkedBuffer.allocate());
+		byte[] bytes = ProtostuffIOUtil.toByteArray(new ObjectWrapper(object), schema, LinkedBuffer.allocate());
 		return bytes;
 	}
 
 	@Override
 	public Object deserialize(byte[] bytes) throws SerializationException {
 		return Optional.ofNullable(bytes).map(b -> {
-							Item item = new Item();
+							ObjectWrapper item = new ObjectWrapper();
 							ProtostuffIOUtil.mergeFrom(b, item, schema);
-							return Optional.ofNullable(item).map(v -> v.getObject()).orElse(null);
+							return item.getObject();
 						}).orElse(null);
 	}
 	
 	@NoArgsConstructor
 	@AllArgsConstructor
-	private static class Item {
+	private static class ObjectWrapper {
 		@Getter
 		private Object object;
 	}

@@ -1,5 +1,14 @@
 package org.rqing.demo.common.util;
 
+/**
+ * string utils
+ * 
+ * @description 
+ * @author piaoruiqing
+ * @date: 2018/10/07 21:44
+ *
+ * @since JDK 1.8
+ */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
 	/**

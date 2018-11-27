@@ -11,10 +11,12 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * redis conf
- * @author piaoruiqing
- * @date: 2018-09-29:08
+ * redis config
  * 
+ * @description 
+ * @author piaoruiqing
+ * @date: 2018/09/29 22:19
+ *
  * @since JDK 1.8
  */
 @Configuration

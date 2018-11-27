@@ -1,9 +1,3 @@
-/*
- * File Name:OffsetBasedPageRequest.java is created on 2018年10月7日下午3:12:59 by piaoruiqing
- *
- * Copyright (c) 2018, xiaoyujiaoiyu technology All Rights Reserved.
- * 
- */
 package org.rqing.demo.mongo.support;
 
 import java.io.Serializable;
@@ -15,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 /**
- * 
+ * offset-based page request
  * @description 
  * @author piaoruiqing
  * @date: 2018/10/07 15:12
@@ -39,11 +33,10 @@ public class OffsetBasedPageRequest implements Pageable, Serializable {
      */
     public OffsetBasedPageRequest(long offset, int limit, Sort sort) {
         if (offset < 0) {
-            throw new IllegalArgumentException("Offset index must not be less than zero!");
+            throw new IllegalArgumentException("offset index must not be less than zero!");
         }
-
         if (limit < 1) {
-            throw new IllegalArgumentException("Limit must not be less than one!");
+            throw new IllegalArgumentException("limit must not be less than one!");
         }
         this.limit = limit;
         this.offset = offset;
@@ -142,11 +135,13 @@ public class OffsetBasedPageRequest implements Pageable, Serializable {
     
     @Override
     public boolean equals(Object object) {
-        if (this == object) return true;
-
-        if (!(object instanceof OffsetBasedPageRequest)) return false;
-
-        OffsetBasedPageRequest that = (OffsetBasedPageRequest) object;
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof OffsetBasedPageRequest)) {
+            return false;
+        }
+        OffsetBasedPageRequest that = (OffsetBasedPageRequest)object;
 
         return new EqualsBuilder()
                 .append(limit, that.limit)

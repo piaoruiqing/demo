@@ -5,6 +5,9 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.concurrent.TimeUnit;
+
+import org.springframework.core.annotation.AliasFor;
 
 /**
  * cache annotation
@@ -18,14 +21,34 @@ import java.lang.annotation.Target;
 public @interface RedisCacheable {
 	
 	/**
-	 * 缓存超时时间<br/>
+	 * cache time out <br/>
 	 * ms
 	 * @author piaoruiqing
 	 * @date 2018/09/17 15:41:35
 	 * @return
 	 */
+    @AliasFor("timeout")
+	long value() default 10000L;
+	
+    /**
+     * cache time out <br/>
+     * ms
+     * @author piaoruiqing
+     * @date 2018/09/17 15:41:35
+     * @return
+     */
+	@AliasFor("value")
 	long timeout() default 10000L;
 	
-	// TODO 时间读取配置
+	/**
+	 * time unit of cache time out
+	 * @author piaoruiqing
+	 * @date: 2018/10/07 21:55
+	 * 
+	 * @return
+	 */
+	TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
+	
+	// TODO read from config
 	
 }

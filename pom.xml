@@ -17,6 +17,7 @@
 		<module>demo-protostuff</module>
 		<module>demo-mongo</module>
 		<module>demo-common</module>
+		<module>demo-poi</module>
 	</modules>
 	<properties>
 		<project.version>0.0.1-SNAPSHOT</project.version>
@@ -48,8 +49,8 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 		</plugins>

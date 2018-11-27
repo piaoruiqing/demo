@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.rqing.demo.cache.annotation.RedisCacheable;
-import org.rqing.demo.common.util.ObjectMapperUtil;
+import org.rqing.demo.common.util.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -19,8 +19,8 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 缓存切面<br/>
- * {@link org.rqing.demo.annotation.RedisCacheable}
+ * cache aspect<br/>
+ * {@link org.rqing.demo.cache.annotation.RedisCacheable}
  * 
  * @description 
  * @author piaoruiqing
@@ -58,7 +58,7 @@ public class RedisCacheableAspect {
 			if (arg instanceof Number || arg instanceof String || arg instanceof Boolean || arg instanceof Character) {
 				stringBuilder.append(arg);
 			} else {
-				stringBuilder.append(ObjectMapperUtil.writeValueAsString(arg));
+				stringBuilder.append(ObjectMapperUtils.writeValueAsString(arg));
 			}
 		}
 		final String key = stringBuilder.toString();
@@ -79,12 +79,12 @@ public class RedisCacheableAspect {
 			return proceedingJoinPoint.proceed();
 		}
 		RedisCacheable redisCachePageable = method.getAnnotation(RedisCacheable.class);
-
-		long timeout = redisCachePageable.timeout();
+		long timeout = redisCachePageable.value();
+		TimeUnit timeUnit = redisCachePageable.timeUnit();
 		
 		Object result = proceedingJoinPoint.proceed();
 		
-		redisTemplate.opsForValue().set(key, result, timeout, TimeUnit.MILLISECONDS);
+		redisTemplate.opsForValue().set(key, result, timeout, timeUnit);
 		
 		return result;
 	}

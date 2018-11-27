@@ -1,12 +1,12 @@
 package org.rqing.demo.mongo.controller;
 
+import java.util.Arrays;
 import java.util.Random;
-
-import org.rqing.demo.mongo.entity.Entity;
-import org.rqing.demo.mongo.repository.IEntityMongoRepository;
+import static org.rqing.demo.mongo.entity.QDemoEntity.DEMO_ENTITY;
+import org.rqing.demo.mongo.entity.DemoEntity;
+import org.rqing.demo.mongo.repository.IDemoEntityMongoRepository;
 import org.rqing.demo.mongo.support.OffsetBasedPageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 
 /**
  * 
@@ -29,28 +32,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoMongoController {
     
     @Autowired
-    private IEntityMongoRepository entityMongoRepository;
+    private IDemoEntityMongoRepository entityMongoRepository;
     
-    @RequestMapping(value = "/entity", method = {RequestMethod.GET})
+    @RequestMapping(value = "/entity/", method = {RequestMethod.GET})
     public ResponseEntity<?> page(@RequestParam(value = "offset", defaultValue = "0")Long offset, 
                                   @RequestParam(value = "limit", defaultValue = "10")Integer limit){
-        Example<Entity> example = Example.of(new Entity());
         Pageable pageable = new OffsetBasedPageRequest(offset, limit);
-        Page<Entity> page = entityMongoRepository.findAll(example, pageable);
+        BooleanBuilder predicate = new BooleanBuilder();
+        Predicate contains1 = DEMO_ENTITY.list.contains(1);
+        Predicate contains2 = DEMO_ENTITY.list.any().notIn(2,3,4);
+        BooleanBuilder or = predicate.or(contains1).or(contains2);
+        Page<DemoEntity> page = entityMongoRepository.findAll(or, pageable);
         return ResponseEntity.ok(page);
     }
     
     @RequestMapping(value = "/entity/{id}", method = {RequestMethod.GET})
     public ResponseEntity<?> find(@PathVariable("id")String id) {
-        Entity result = entityMongoRepository.findById(id).orElse(null);
+        DemoEntity result = entityMongoRepository.findById(id).orElse(null);
         return ResponseEntity.ok(result);
     }
     
-    @RequestMapping(value = "/save", method = {RequestMethod.POST})
+    @RequestMapping(value = "/entity/", method = {RequestMethod.POST})
     public ResponseEntity<?> save() {
-        Entity entity = new Entity();
+        DemoEntity entity = new DemoEntity();
         entity.setName("小明");
         entity.setNo(new Random().nextInt());
+        entity.setList(Arrays.asList(0,1,5));
         entity = entityMongoRepository.save(entity);
         return ResponseEntity.ok(entity);
     }

@@ -16,13 +16,22 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * demo cache controller
+ * 
+ * @description 
+ * @author piaoruiqing
+ * @date: 2018/10/07 21:52
+ *
+ * @since JDK 1.8
+ */
 @RestController
 @RequestMapping("/demo/cache")
 @Slf4j
 public class DemoCacheController {
 
 	@RequestMapping(value = "/test", method = {RequestMethod.GET})
-	@RedisCacheable(timeout = 300*1000L)
+	@RedisCacheable(300*1000L)
 	public Object test() {
 		log.info("run");
 		return "OK";
