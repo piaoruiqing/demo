@@ -18,18 +18,21 @@
 		<module>demo-mongo</module>
 		<module>demo-common</module>
 		<module>demo-poi</module>
+		<module>demo-mybatis</module>
 	</modules>
 	<properties>
 		<project.version>0.0.1-SNAPSHOT</project.version>
+		<mybatis.version>1.3.2</mybatis.version>
+		<commons-lang3.version>3.7</commons-lang3.version>
+		<tk.mybatis.mapper.version>2.1.0</tk.mybatis.mapper.version>
+		<mybatis.pagehelper.version>1.2.10</mybatis.pagehelper.version>
 	</properties>
 	<dependencies>
-	
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -42,7 +45,23 @@
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
-		
+		<dependencies>
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>tk.mybatis</groupId>
+				<artifactId>mapper-spring-boot-starter</artifactId>
+				<version>${tk.mybatis.mapper.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper-spring-boot-starter</artifactId>
+				<version>${mybatis.pagehelper.version}</version>
+			</dependency>
+		</dependencies>
 	</dependencyManagement>
 	<build>
 		<plugins>

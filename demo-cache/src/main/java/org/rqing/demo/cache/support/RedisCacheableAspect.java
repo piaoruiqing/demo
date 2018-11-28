@@ -67,7 +67,6 @@ public class RedisCacheableAspect {
 		if (null != cache) {
 			return cache;
 		}
-
 		// 缓存未命中
 		Object target = proceedingJoinPoint.getTarget();
 		Class<?>[] parameterTypes = ((MethodSignature)proceedingJoinPoint.getSignature()).getMethod().getParameterTypes();

@@ -2,6 +2,7 @@ package org.rqing.demo.cache.controller;
 
 import java.util.Date;
 
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.rqing.demo.cache.annotation.RedisCacheable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,12 +30,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/demo/cache")
 @Slf4j
 public class DemoCacheController {
-
+    
 	@RequestMapping(value = "/test", method = {RequestMethod.GET})
 	@RedisCacheable(300*1000L)
 	public Object test() {
 		log.info("run");
-		return "OK";
+		return new Entity();
 	}
 	
 	@Autowired
@@ -87,7 +88,8 @@ public class DemoCacheController {
         private Character _char = 'a';
         private Date _date = new Date();
         private Date _date_2 = null;
-//        private Byte[] _byte_array = new Byte[16];
+//        private Byte[] _byte_array = new Byte[] {1};
+        private byte[] __byte_array = new byte[16];
 //        private Integer[] _integer_array = new Integer[16];
 //        private Date[] _date_array = new Date[16];
 //        private Byte[] _byte_array = null;
